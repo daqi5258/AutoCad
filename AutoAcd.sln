@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCad", "AutoCad.csproj", "{794D0443-9DDD-4B23-8062-8336EE89CCE2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkFlow", "..\WorkFlow\WorkFlow.csproj", "{6D99D81D-9CC1-4BBD-B037-F5CB09496806}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCad", "AutoCad.csproj", "{794D0443-9DDD-4B23-8062-8336EE89CCE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{794D0443-9DDD-4B23-8062-8336EE89CCE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{794D0443-9DDD-4B23-8062-8336EE89CCE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{794D0443-9DDD-4B23-8062-8336EE89CCE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{794D0443-9DDD-4B23-8062-8336EE89CCE2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D99D81D-9CC1-4BBD-B037-F5CB09496806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D99D81D-9CC1-4BBD-B037-F5CB09496806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D99D81D-9CC1-4BBD-B037-F5CB09496806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D99D81D-9CC1-4BBD-B037-F5CB09496806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{794D0443-9DDD-4B23-8062-8336EE89CCE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{794D0443-9DDD-4B23-8062-8336EE89CCE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{794D0443-9DDD-4B23-8062-8336EE89CCE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{794D0443-9DDD-4B23-8062-8336EE89CCE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
