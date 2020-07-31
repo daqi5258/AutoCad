@@ -424,6 +424,7 @@ namespace AutoCad
                 {
                     objectId = btr.AppendEntity(ent);
                     trans.AddNewlyCreatedDBObject(ent, true);
+
                 }
                 trans.Commit();
             }
@@ -610,5 +611,113 @@ namespace AutoCad
                 AddToModelSpace(db, triangleCircleJig.GetEntity());
             }
         }
+
+        [CommandMethod("changeEntity")]
+        public void ChangEntity()
+        {
+            Database db = HostApplicationServices.WorkingDatabase;
+            Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
+            PromptSelectionOptions pso = new PromptSelectionOptions();
+            pso.MessageForAdding = "\n选择对象";
+            PromptSelectionResult psr = ed.GetSelection(pso);
+            if (psr.Status != PromptStatus.OK) return;
+            SelectionSet ss = psr.Value;
+            ObjectId[] ids = ss.GetObjectIds();
+            Entity[] selectEnt = new Entity[ids.Length];
+            Entity[] resultEnt = new Entity[ids.Length];
+            using (Transaction trans = db.TransactionManager.StartTransaction())
+            {
+                for (int i = 0; i < ids.Length; i++)
+                {
+                    selectEnt[i] = trans.GetObject(ids[i], OpenMode.ForWrite) as Entity;
+                    resultEnt[i] = selectEnt[i].Clone() as Entity;
+                }
+                PromptKeywordOptions pko = new PromptKeywordOptions("\n请选择操作类型");
+                pko.Keywords.Add("J", "J", "镜像(J)", true,true);
+                pko.Keywords.Add("Y", "Y", "移动(Y)", true, true);
+                pko.Keywords.Add("X", "X", "旋转(X)", true, true);
+                pko.Keywords.Add("S", "S", "缩放(S)", true, true);
+                pko.Keywords.Default = "J";
+                PromptResult prmt = ed.GetKeywords(pko);
+                if (prmt.Status != PromptStatus.OK) return;
+                if (prmt.Status== PromptStatus.OK) {
+                    String mType = prmt.StringResult;
+                    PromptPointResult ppr2 = ed.GetPoint("\n请第一点:");
+                    if (ppr2.Status != PromptStatus.OK) return;
+                    Point3d p = ppr2.Value;
+                    EntityChangeTools entChangeJig = new EntityChangeTools(selectEnt, resultEnt, p, mType);
+                    PromptResult pr = ed.Drag(entChangeJig);
+                    if (pr.Status == PromptStatus.OK)
+                    {
+                        PromptKeywordOptions pko2 = new PromptKeywordOptions("\n是否删除源对象");
+                        pko2.Keywords.Add("Y", "Y", "是(Y)", true, true);
+                        pko2.Keywords.Add("N", "N", "否(N)", true, true);
+                        pko2.Keywords.Default = "N";
+                        PromptResult pr2 = ed.GetKeywords(pko2);
+                        if (pr2.Status==PromptStatus.OK &&　pr2.StringResult=="Y")
+                        {
+                            foreach (Entity ent in selectEnt)
+                            {
+                                ent.Erase();
+                            }
+                        }
+                        foreach (Entity ent in resultEnt)
+                            {
+                                AddToModelSpace(db, ent);
+                            }
+                        }
+                    }
+                trans.Commit();
+                }
+            }
+
+        [CommandMethod("mirrorEntity")]
+        public void JigMirror()
+        {
+            Database db = HostApplicationServices.WorkingDatabase;
+            Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
+            PromptSelectionOptions pso = new PromptSelectionOptions();
+            pso.MessageForAdding="选择对象";
+            PromptSelectionResult psr = ed.GetSelection(pso);
+            if (psr.Status != PromptStatus.OK) return;
+            SelectionSet ss = psr.Value;
+            ObjectId[] ids = ss.GetObjectIds();
+            Entity[] selectEnt = new Entity[ids.Length];
+            Entity[] resultEnt = new Entity[ids.Length];
+            using (Transaction trans  = db.TransactionManager.StartTransaction())
+            {
+                for (int i = 0; i < ids.Length; i++)
+                {
+                    selectEnt[i] = trans.GetObject(ids[i],OpenMode.ForWrite) as Entity;
+                    resultEnt[i] = selectEnt[i].Clone() as Entity;
+                }
+                PromptPointResult ppr2 = ed.GetPoint("\n请指定镜像线第一点:") ;
+                if (ppr2.Status != PromptStatus.OK) return;
+                Point3d p = ppr2.Value;
+                MirrorJig mirrorJig = new MirrorJig(p,selectEnt,resultEnt);
+                PromptResult pr = ed.Drag(mirrorJig);
+                if (pr.Status==PromptStatus.OK)
+                {
+                    foreach (Entity ent in resultEnt)
+                    {
+                        AddToModelSpace(db, ent);
+                    }
+                }
+                trans.Commit();
+            }
+              
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

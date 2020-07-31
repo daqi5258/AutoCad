@@ -71,8 +71,10 @@
     </Compile>
     <Compile Include="CadCommand.cs" />
     <Compile Include="draw.cs" />
+    <Compile Include="EntityChangeTools.cs" />
     <Compile Include="entityJig.cs" />
     <Compile Include="layerTools.cs" />
+    <Compile Include="MirrorJig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="triangleJig.cs" />
